@@ -17,10 +17,10 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
     });
     try {
       await content.save();
-      res.redirect("/auth/login");
+      res.redirect("/login");
     } catch (e) {
       console.log(`Error saving users: ${e}`);
-      res.redirect("/auth/register");
+      res.redirect("/register");
     }
   } catch (err) {
     console.log(err);
@@ -31,8 +31,8 @@ router.post(
   "/login",
   checkNotAuthenticated,
   passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/auth/login",
+    successRedirect: "/home",
+    failureRedirect: "/login",
     failureFlash: true,
   })
 );
@@ -41,16 +41,26 @@ router.get("/login", checkNotAuthenticated, (req, res, next) => {
   res.render("login");
 });
 
-router.delete("/logout", (req, res) => {
+router.get("/about", checkAuthenticated , (req, res, next) => {
+  res.render("about");
+});
+
+router.delete("/logout" , checkAuthenticated, (req, res) => {
   req.logOut();
-  res.redirect("/auth/login");
+  res.redirect("/login");
 });
 
 function checkNotAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    return res.redirect("/");
+    return res.redirect("/home");
   }
   next();
 }
 
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+}
 module.exports = router;

@@ -15,12 +15,15 @@ const passport = require("passport");
 const flash = require("express-flash");
 const initializePassport = require("./passport-config");
 const methodOverride = require("method-override");
-
+const path = require('path');
 const PORT = process.env.PORT || 3000;
 const DB = process.env.DB;
 
 initializePassport(passport);
 
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -41,7 +44,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use("/auth", authRoutes);
+app.use(authRoutes);
 
 const startApp = async () => {
   try {
@@ -70,6 +73,11 @@ const startApp = async () => {
 };
 
 app.get("/", checkAuthenticated , (req, res) => {
+  res.redirect('/home')
+
+});
+
+app.get("/home", checkAuthenticated , (req, res) => {
   res.render("home", { name: req.user.username });
 
 });
@@ -78,7 +86,7 @@ function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect("/auth/login");
+  res.redirect("/login");
 }
 
 startApp();

@@ -66,7 +66,7 @@
         <% if(messages.error){ %>
             <%= messages.error %>
         <% } %>
-        <form action='/auth/login' method='POST'>
+        <form action='/login' method='POST'>
             <div class="container">
                 <div>
                     <label for="email">Email</label>
@@ -81,7 +81,7 @@
             <button type="submit">Login</button>
         </form>
         <div class="footer">
-        <small><b>New here?</b>&emsp;<a href="/auth/register">Sign Up</a></small>
+        <small><b>New here?</b>&emsp;<a href="/register">Sign Up</a></small>
         </div>
     </div>
 </body>
