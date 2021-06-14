@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        form {
+            border: 3px solid #f1f1f1;
+        }
+
+        .holder {
+            width: 30%;
+            margin: auto;
+        }
+
+        input[type=email],
+        input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #14865d;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0 0 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        h2 {
+            text-align: center;
+            font-family: "Times New Roman", Times, serif;
+        }
+        .footer{
+            text-align: center;
+            color: rgb(105, 102, 102);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="holder">
+        <h2>Login</h2>
+        <% if(messages.error){ %>
+            <%= messages.error %>
+        <% } %>
+        <form action='/auth/login' method='POST'>
+            <div class="container">
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter Email" />
+                </div>
+
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" />
+                </div>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div class="footer">
+        <small><b>New here?</b>&emsp;<a href="/auth/register">Sign Up</a></small>
+        </div>
+    </div>
+</body>
+
+</html>
